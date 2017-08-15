@@ -4,17 +4,36 @@ import java.util.*;
 public class LinkedListMultiset<T> extends Multiset<T>
 {
 	
-	protected Node head;
-	protected node tail;
+	protected Node<T> head;
+	protected Node<T> tail;
 	
 	public LinkedListMultiset() {
-		head = new Node();
+		head = new Node<T>();
 		tail = head;
 	} // end of LinkedListMultiset()
 	
 	
 	public void add(T item) {
-		
+		if (head.get() == null)
+		{
+			head.changeElement(item);
+			head.updateCount(1);
+		}
+		else
+		{
+			if(search(item) == 0)
+			{
+				Node<T> newNode = new Node<T>(item);
+			}
+			else
+			{
+				//update count on returned node (requires implementation of search)
+				Node<T> newNode;
+			}
+			tail.setNext(newNode);
+			newNode.setPrevious(tail);
+			tail = newNode;
+		}
 	} // end of add()
 	
 	
@@ -37,7 +56,10 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	
 	
 	public void print(PrintStream out) {
-		// Implement me!
+		/*print in format:
+		*  <element> | <number of elements in set>
+		*  <diffelement> | <number of elements in set>
+		*/
 	} // end of print()
 	
 } // end of class LinkedListMultiset
