@@ -40,7 +40,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 				tempUpdateNode.updateCount(tempUpdateNode.getCount() + 1);
 				//move the node along in the list to the correct point
 				//TODO: ensure no error when (tempUpdateNode.getNext() == null) for getCount()
-				while (tempUpdateNode.getCount() > tempUpdateNode.getNext().getCount())
+				while (!tail.equals(tempUpdateNode) && tempUpdateNode.getCount() > tempUpdateNode.getNext().getCount())
 				{
 					//set the previous and next nodes to point to each other
 					tempUpdateNode.getPrevious().setNext(tempUpdateNode.getNext());
@@ -49,14 +49,11 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 					tempUpdateNode.setPrevious(tempUpdateNode.getNext());
 					tempUpdateNode.setNext(tempUpdateNode.getNext().getNext());
 					tempUpdateNode.getNext().setPrevious(tempUpdateNode);
-					
-
-					//if node has moved to the end of the list, update the tail and break the loop
-					if (tempUpdateNode.getNext() == null)
-					{
-						tail = tempUpdateNode;
-						break;
-					}
+				}
+				//if node has moved to the end of the list, update the tail
+				if (tempUpdateNode.getNext() == null)
+				{
+					tail = tempUpdateNode;
 				}
 				
 			}
@@ -69,22 +66,58 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 	//essentially the inverse of the add() method
 	public void removeOne(T item) {
 		Node tempNode = getNode(item);
+		//if tempNode doesn't exist, return
 		if (tempNode == null)
 		{
 			return;
 		}
+		//if only one item left in node, remove all
 		else if (tempNode.getCount() == 1)
 		{
-			if (head == tempNode)
+			removeAll(item);
+		}
+		//else move item along to correct place in list
+		else
+		{
 			{
-				
+				while (!head.equals(tempNode) && tempNode.getCount() < tempNode.getPrevious().getCount())
+				{
+					tempNode.getNext().setPrevious(tempNode.getPrevious());
+					tempNode.getPrevious().setNext(tempNode.getNext());
+					
+					tempNode.setNext(tempNode.getPrevious());
+					tempNode.setPrevious(tempNode.getPrevious().getPrevious());
+					tempNode.getPrevious().setNext(tempNode);
+				}
+				if (tempNode.getPrevious() == null)
+				{
+					head = tempNode;
+				}
 			}
 		}
 	} // end of removeOne()
 	
 	
 	public void removeAll(T item) {
-		// Implement me!
+		Node tempNode = getNode(item);
+		//if node is at head, move head along one
+		if (head.equals(tempNode))
+		{
+			head = head.getNext();
+			head.setPrevious(null);
+		}
+		//if node is at tail, cut tail short one in list
+		else if (tail.equals(tempNode))
+		{
+			tail = tempNode.getPrevious();
+			tail.setNext(null);
+		}
+		else
+		{
+			//remove node from list by changing pointers in surrounding nodes
+			tempNode.getPrevious().setNext(tempNode.getNext());
+			tempNode.getNext().setPrevious(tempNode.getPrevious());
+		}
 	} // end of removeAll()
 	
 	//same as LinkedListMultiset: not implemented here as extended from superclass
