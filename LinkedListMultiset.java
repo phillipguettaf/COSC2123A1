@@ -79,21 +79,26 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	
 	
 	public void removeAll(T item) {
-		
-		if (getNode(item) == null)
+		Node<T> tempNode = getNode(item);
+		//if node is at head, move head along one
+		if (head.equals(tempNode))
 		{
-			return;
+			head = head.getNext();
+			head.setPrevious(null);
+		}
+		//if node is at tail, cut tail short one in list
+		else if (tail.equals(tempNode))
+		{
+			tail = tempNode.getPrevious();
+			tail.setNext(null);
 		}
 		else
-		//change the surrounding nodes to point to each other, and decrement the list counter
 		{
-			getNode(item).getNext().setPrevious(getNode(item).getPrevious());
-			getNode(item).getPrevious().setNext(getNode(item).getNext());
-			listCount--;
+			//remove node from list by changing pointers in surrounding nodes
+			tempNode.getPrevious().setNext(tempNode.getNext());
+			tempNode.getNext().setPrevious(tempNode.getPrevious());
 		}
-
 	} // end of removeAll()
-	
 	
 	public void print(PrintStream out) {
 		
