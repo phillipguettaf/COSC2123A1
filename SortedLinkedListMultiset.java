@@ -9,7 +9,7 @@ import java.util.*;
 public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 {
 	public SortedLinkedListMultiset() {
-		head = new Node();
+		head = new Node<T>();
 		tail = head;
 		listCount = 0;
 	} // end of SortedLinkedListMultiset()
@@ -28,7 +28,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 			//if element is not in list, add one and set it to the head (one is the lowest value in the list)
 			if (search(item) == 0)
 			{
-				Node newNode = new Node(item);
+				Node<T> newNode = new Node<T>(item);
 				head.setPrevious(newNode);
 				newNode.setNext(head);
 				head = newNode;
@@ -36,7 +36,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 			}
 			else
 			{
-				Node tempUpdateNode = getNode(item);
+				Node<T> tempUpdateNode = getNode(item);
 				tempUpdateNode.updateCount(tempUpdateNode.getCount() + 1);
 				//move the node along in the list to the correct point
 				//TODO: ensure no error when (tempUpdateNode.getNext() == null) for getCount()
@@ -65,7 +65,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 	
 	//essentially the inverse of the add() method
 	public void removeOne(T item) {
-		Node tempNode = getNode(item);
+		Node<T> tempNode = getNode(item);
 		//if tempNode doesn't exist, return
 		if (tempNode == null)
 		{
@@ -99,7 +99,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 	
 	
 	public void removeAll(T item) {
-		Node tempNode = getNode(item);
+		Node<T> tempNode = getNode(item);
 		//if node is at head, move head along one
 		if (head.equals(tempNode))
 		{
