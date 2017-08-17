@@ -81,13 +81,13 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	public void removeAll(T item) {
 		Node<T> tempNode = getNode(item);
 		//if node is at head, move head along one
-		if (head.equals(tempNode))
+		if (head == tempNode)
 		{
 			head = head.getNext();
 			head.setPrevious(null);
 		}
 		//if node is at tail, cut tail short one in list
-		else if (tail.equals(tempNode))
+		else if (tail == tempNode)
 		{
 			tail = tempNode.getPrevious();
 			tail.setNext(null);
@@ -98,7 +98,6 @@ public class LinkedListMultiset<T> extends Multiset<T>
 			tempNode.getPrevious().setNext(tempNode.getNext());
 			tempNode.getNext().setPrevious(tempNode.getPrevious());
 		}
-		listCount--;
 	} // end of removeAll()
 	
 	public void print(PrintStream out) {
