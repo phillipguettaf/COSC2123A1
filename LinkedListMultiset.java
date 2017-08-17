@@ -10,8 +10,6 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	protected int listCount;
 	
 	public LinkedListMultiset() {
-		head = new Node<T>();
-		tail = head;
 		listCount = 0;
 	} // end of LinkedListMultiset()
 	
@@ -20,8 +18,8 @@ public class LinkedListMultiset<T> extends Multiset<T>
 		//if list is empty, add the new element to the head
 		if (head.get() == null)
 		{
-			head.changeElement(item);
-			head.updateCount(1);
+			head = new Node<T>(item);
+			tail = head;
 			listCount++;
 		}
 		else
