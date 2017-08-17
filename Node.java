@@ -1,9 +1,9 @@
 
-public class Node {
+public class Node<T> {
 	
 	protected T item;
-	protected Node next;
-	protected Node previous;
+	protected Node<T> next;
+	protected Node<T> previous;
 	protected int count;
 	
 	public Node()
@@ -18,12 +18,12 @@ public class Node {
 		this.item = item;
 	}
 	
-	public Node getNext()
+	public Node<T> getNext()
 	{
 		return next;
 	}
 	
-	public Node getPrevious()
+	public Node<T> getPrevious()
 	{
 		return previous;
 	}
@@ -33,17 +33,17 @@ public class Node {
 		return item;
 	}
 	
-	public setNext(Node nextNode)
+	public void setNext(Node<T> nextNode)
 	{
 		this.next = nextNode;
 	}
 	
-	public setPrevious(Node previousNode)
+	public void setPrevious(Node<T> previousNode)
 	{
 		this.previous = previousNode;
 	}
 	
-	public changeElement(T item)
+	public void changeElement(T item)
 	{
 		this.item = item;
 	}
@@ -53,7 +53,7 @@ public class Node {
 		return count;
 	}
 	
-	public updateCount(int newCount)
+	public void updateCount(int newCount)
 	{
 		count = newCount;
 	}
