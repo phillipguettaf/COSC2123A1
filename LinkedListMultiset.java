@@ -63,7 +63,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	public void removeOne(T item) {
 		if (getNode(item) == null)
 		{
-			System.out.println("Cannot delete " + item + ". Does not exist.");
+			return;
 		}
 		
 		//if only one exists, remove node, else decrement element count
@@ -82,7 +82,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
 		
 		if (getNode(item) == null)
 		{
-			System.out.println("Cannot delete " + item + ". Does not exist.");
+			return;
 		}
 		else
 		//change the surrounding nodes to point to each other, and decrement the list counter
