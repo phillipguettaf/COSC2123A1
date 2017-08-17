@@ -98,6 +98,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
 			tempNode.getPrevious().setNext(tempNode.getNext());
 			tempNode.getNext().setPrevious(tempNode.getPrevious());
 		}
+		listCount--;
 	} // end of removeAll()
 	
 	public void print(PrintStream out) {
