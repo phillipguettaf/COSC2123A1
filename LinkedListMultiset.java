@@ -16,7 +16,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	
 	public void add(T item) {
 		//if list is empty, add the new element to the head
-		if (head.get() == null)
+		if (head == null)
 		{
 			head = new Node<T>(item);
 			tail = head;
@@ -28,6 +28,8 @@ public class LinkedListMultiset<T> extends Multiset<T>
 			if (search(item) == 0)
 			{
 				Node<T> newNode = new Node<T>(item);
+				tail.setNext(newNode);
+				newNode.setPrevious(tail);
 				tail = newNode;
 				listCount++;
 			}
