@@ -16,6 +16,7 @@ public class Node<T> {
 	public Node(T item)
 	{
 		this.item = item;
+		this.count = 1;
 	}
 	
 	public Node<T> getNext()
