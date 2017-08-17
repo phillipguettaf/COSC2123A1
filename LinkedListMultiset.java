@@ -102,10 +102,10 @@ public class LinkedListMultiset<T> extends Multiset<T>
 		//starting with head, iterate through list and print, then print the tail
 		while (!printNode.equals(tail))
 		{
-			out.println(printNode.get() + "\t| " + printNode.getCount());
+			out.println(printNode.get() + " | " + printNode.getCount());
 			printNode = printNode.getNext();
 		}
-		out.println(tail.get() + "\t| " + tail.getCount());
+		out.println(tail.get() + " | " + tail.getCount());
 		
 		/*print in format:
 		*  <element>     | <number of elements in set>
