@@ -1,15 +1,16 @@
 import java.io.PrintStream;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class LinkedListMultiset<T> extends Multiset<T>
 {
 	
-	protected Node head;
-	protected Node tail;
+	protected Node<T> head;
+	protected Node<T> tail;
 	protected int listCount;
 	
 	public LinkedListMultiset() {
-		head = new Node();
+		head = new Node<T>();
 		tail = head;
 		listCount = 0;
 	} // end of LinkedListMultiset()
@@ -28,7 +29,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
 			//if element not in list, add new node and update tail, else update count in existing node
 			if (search(item) == 0)
 			{
-				Node newNode = new Node(item);
+				Node<T> newNode = new Node<T>(item);
 				tail = newNode;
 				listCount++;
 			}
@@ -42,7 +43,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	//search for number of instances of "item" in the list: return this
 	public int search(T item) {
 	
-		Node tempNode = head;
+		Node<T> tempNode = head;
 		if (tail.get().equals(item))
 		{
 			return tail.getCount();
@@ -96,7 +97,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	
 	public void print(PrintStream out) {
 		
-		Node printNode  = head;
+		Node<T> printNode  = head;
 		
 		//starting with head, iterate through list and print, then print the tail
 		while (!printNode.equals(tail))
@@ -113,9 +114,9 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	} // end of print()
 	
 	//returns the instance of a node if found in the list: returns null if node not found
-	private Node getNode(T item)
+	protected Node<T> getNode(T item)
 	{
-		Node tempNode = head;
+		Node<T> tempNode = head;
 		if (tail.get().equals(item))
 		{
 			return tail;
