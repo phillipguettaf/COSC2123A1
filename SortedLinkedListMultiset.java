@@ -8,6 +8,7 @@ import java.util.*;
 @SuppressWarnings("unused")
 public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 {
+	
 	public SortedLinkedListMultiset() {
 		listCount = 0;
 	} // end of SortedLinkedListMultiset()
@@ -32,13 +33,13 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 				tempNode = tempNode.getNext();
 				tempNodeString = (String) tempNode.get();
 			}
-			if (tempNode.getNext() == null)
+			if (tempNode == null)
 			{
-				tempNode.setNext(newNode);
-				newNode.setPrevious(tempNode);
+				tail.setNext(newNode);
+				newNode.setPrevious(tail);
 				tail = newNode;
 			}
-			else if (tempNode.getPrevious() == null)
+			else if (tempNode == head)
 			{
 				tempNode.setPrevious(newNode);
 				newNode.setNext(tempNode);
@@ -51,6 +52,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 				tempNode.getPrevious().setNext(newNode);
 				tempNode.setPrevious(newNode);
 			}
+			listCount++;
 		}
 		else
 		{
@@ -59,11 +61,21 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 		}
 	} // end of add()
 	
-	//inherited from LinkedListMultiset
-	//public int search(T item)
+	public int search(T item) {
+		Node<T> tempNode = getNode(item);
+		
+		if (tempNode == null)
+		{
+			return 0;
+		}
+		else
+		{
+			return tempNode.getCount();
+		}
+	} // end of search()
 	
 	
-	//ingerited from superclass
+	//inherited from superclass
 	//public void removeOne(T item)
 	
 	
@@ -78,21 +90,25 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 		Node<T> tempNode = head;
 		int start = 0;
 		int end = listCount - 1;
+		int m;
 		String itemString = (String) item;
 		String tempNodeString;
 		
+		if (tempNode == null)
+		{
+			return null;
+		}
 		
 		//binary search
 		while (!tempNode.get().equals(item))
 		{
+			m = (int) Math.floor((start + end)/2);
+			tempNode = getNodeAt(m);
 			if (start > end || tempNode == null)
 			{
 				return null;
 			}
-			int m = (start + end)/2;
-			tempNode = getNodeAt(m);
 			tempNodeString = (String) tempNode.get();
-		
 			if (itemString.compareTo(tempNodeString) < 0)
 			{
 				end = m-1;
@@ -112,7 +128,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 			return null;
 		}
 		Node<T> tempNode = head;
-		for (int i = 0; i <= index; i++)
+		for (int i = 0; i < index; i++)
 		{
 			tempNode = tempNode.getNext();
 		}
