@@ -52,23 +52,24 @@ public class LinkedListMultiset<T> extends Multiset<T>
 		{
 			return tempNode.getCount();
 		}
-	 // end of search()
+	} // end of search()
 	
 	
 	public void removeOne(T item) {
-		if (getNode(item) == null)
+		Node<T> tempNode = getNode(item);
+		if (tempNode == null)
 		{
 			return;
 		}
 		
 		//if only one exists, remove node, else decrement element count
-		if (search(item) == 1)
+		if (tempNode.getCount() == 1)
 		{
 			removeAll(item);
 		}
 		else
 		{
-			getNode(item).updateCount(getNode(item).getCount() - 1);
+			tempNode.updateCount(tempNode.getCount() - 1);
 		}
 	} // end of removeOne()
 	
@@ -92,6 +93,8 @@ public class LinkedListMultiset<T> extends Multiset<T>
 			//remove node from list by changing pointers in surrounding nodes
 			tempNode.getPrevious().setNext(tempNode.getNext());
 			tempNode.getNext().setPrevious(tempNode.getPrevious());
+			tempNode.setPrevious(null);
+			tempNode.setNext(null);
 		}
 	} // end of removeAll()
 	
