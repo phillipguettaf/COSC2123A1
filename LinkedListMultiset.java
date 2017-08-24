@@ -42,22 +42,17 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	
 	//search for number of instances of "item" in the list: return this
 	public int search(T item) {
-	
-		Node<T> tempNode = head;
-		if (tail.get().equals(item))
+		Node<T> tempNode = getNode(item);
+		
+		if (tempNode == null)
 		{
-			return tail.getCount();
+			return 0;
 		}
-		while (!tempNode.equals(tail))
+		else
 		{
-			if (tempNode.get().equals(item))
-			{
-				return tempNode.getCount();
-			}
-			tempNode = tempNode.getNext();
+			return tempNode.getCount();
 		}
-		return 0;
-	} // end of search()
+	 // end of search()
 	
 	
 	public void removeOne(T item) {
