@@ -28,7 +28,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 			Node<T> newNode = new Node<T>(item);
 			String itemString = (String) item;
 			String tempNodeString = (String) tempNode.get();
-			while (itemString.compareTo(tempNodeString) > 0 && tempNode.getNext() != null)
+			while (itemString.compareTo(tempNodeString) > 0)
 			{
 				tempNode = tempNode.getNext();
 				tempNodeString = (String) tempNode.get();
