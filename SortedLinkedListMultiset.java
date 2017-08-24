@@ -59,53 +59,64 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 		}
 	} // end of add()
 	
-	//unimplemented in this class: same as superclass
+	//inherited from LinkedListMultiset
 	//public int search(T item)
 	
-	//essentially the inverse of the add() method
-	public void removeOne(T item) {
-		Node<T> tempNode = getNode(item);
-		//if tempNode doesn't exist, return
-		if (tempNode == null)
-		{
-			return;
-		}
-		//if only one item left in node, remove all
-		else if (tempNode.getCount() == 1)
-		{
-			removeAll(item);
-		}
-		//else move item along to correct place in list
-		else
-		{
-			tempNode.updateCount(tempNode.getCount() - 1);
-		}
-	} // end of removeOne()
+	
+	//ingerited from superclass
+	//public void removeOne(T item)
 	
 	
-	public void removeAll(T item) {
-		Node<T> tempNode = getNode(item);
-		//if node is at head, move head along one
-		if (head.equals(tempNode))
-		{
-			head = head.getNext();
-			head.setPrevious(null);
-		}
-		//if node is at tail, cut tail short one in list
-		else if (tail.equals(tempNode))
-		{
-			tail = tempNode.getPrevious();
-			tail.setNext(null);
-		}
-		else
-		{
-			//remove node from list by changing pointers in surrounding nodes
-			tempNode.getPrevious().setNext(tempNode.getNext());
-			tempNode.getNext().setPrevious(tempNode.getPrevious());
-		}
-	} // end of removeAll()
+	//inherited from superclass
+	//public void removeAll(T item)
 	
-	//same as LinkedListMultiset: not implemented here as extended from superclass
-	//public void print(PrintStream out) 
+	//inherited from superclass
+	//public void print(PrintStream out)
+	
+	public Node<T> getNode(T item)
+	{
+		Node<T> tempNode = head;
+		int start = 0;
+		int end = listCount - 1;
+		String itemString = (String) item;
+		String tempNodeString;
+		
+		
+		//binary search
+		while (!tempNode.get().equals(item))
+		{
+			if (start > end || tempNode == null)
+			{
+				return null;
+			}
+			int m = (start + end)/2;
+			tempNode = getNodeAt(m);
+			tempNodeString = (String) tempNode.get();
+		
+			if (itemString.compareTo(tempNodeString) < 0)
+			{
+				end = m-1;
+			}
+			else if (itemString.compareTo(tempNodeString) > 0)
+			{
+				start = m+1;
+			}
+		}
+		return tempNode;
+	}
+	
+	public Node<T> getNodeAt(int index)
+	{
+		if (index >= listCount)
+		{
+			return null;
+		}
+		Node<T> tempNode = head;
+		for (int i = 0; i <= index; i++)
+		{
+			tempNode = tempNode.getNext();
+		}
+		return tempNode;
+	}
 	
 } // end of class SortedLinkedListMultiset
