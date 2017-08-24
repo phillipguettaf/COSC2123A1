@@ -78,21 +78,7 @@ public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 		//else move item along to correct place in list
 		else
 		{
-			{
-				while (!head.equals(tempNode) && tempNode.getCount() < tempNode.getPrevious().getCount())
-				{
-					tempNode.getNext().setPrevious(tempNode.getPrevious());
-					tempNode.getPrevious().setNext(tempNode.getNext());
-					
-					tempNode.setNext(tempNode.getPrevious());
-					tempNode.setPrevious(tempNode.getPrevious().getPrevious());
-					tempNode.getPrevious().setNext(tempNode);
-				}
-				if (tempNode.getPrevious() == null)
-				{
-					head = tempNode;
-				}
-			}
+			tempNode.updateCount(tempNode.getCount() - 1);
 		}
 	} // end of removeOne()
 	
