@@ -9,54 +9,53 @@ import java.util.*;
 public class SortedLinkedListMultiset<T> extends LinkedListMultiset<T>
 {
 	public SortedLinkedListMultiset() {
-		head = new Node<T>();
-		tail = head;
 		listCount = 0;
 	} // end of SortedLinkedListMultiset()
 	
 	
 	public void add(T item) {
 		//if list is empty, add item to the head
-		if (head.get() == null)
+		if (head == null)
 		{
-			head.changeElement(item);
-			head.updateCount(1);
-			listCount = 1;
+			head = new Node<T>(item);
+			tail = head;
+			listCount++;
 		}
-		else
-		{
-			//if element is not in list, add one and set it to the head (one is the lowest value in the list)
-			if (search(item) == 0)
+		else if (search(item) == 0)
+		{	
+			Node<T> tempNode = head;
+			Node<T> newNode = new Node<T>(item);
+			String itemString = (String) item;
+			String tempNodeString = (String) tempNode.get();
+			while (itemString.compareTo(tempNodeString) > 0 && tempNode.getNext() != null)
 			{
-				Node<T> newNode = new Node<T>(item);
-				head.setPrevious(newNode);
-				newNode.setNext(head);
+				tempNode = tempNode.getNext();
+				tempNodeString = (String) tempNode.get();
+			}
+			if (tempNode.getNext() == null)
+			{
+				tempNode.setNext(newNode);
+				newNode.setPrevious(tempNode);
+				tail = newNode;
+			}
+			else if (tempNode.getPrevious() == null)
+			{
+				tempNode.setPrevious(newNode);
+				newNode.setNext(tempNode);
 				head = newNode;
-				listCount++;
 			}
 			else
 			{
-				Node<T> tempUpdateNode = getNode(item);
-				tempUpdateNode.updateCount(tempUpdateNode.getCount() + 1);
-				//move the node along in the list to the correct point
-				//TODO: ensure no error when (tempUpdateNode.getNext() == null) for getCount()
-				while (!tail.equals(tempUpdateNode) && tempUpdateNode.getCount() > tempUpdateNode.getNext().getCount())
-				{
-					//set the previous and next nodes to point to each other
-					tempUpdateNode.getPrevious().setNext(tempUpdateNode.getNext());
-					tempUpdateNode.getNext().setPrevious(tempUpdateNode.getPrevious());
-					//set the node between the next, and one after the next
-					tempUpdateNode.setPrevious(tempUpdateNode.getNext());
-					tempUpdateNode.setNext(tempUpdateNode.getNext().getNext());
-					tempUpdateNode.getNext().setPrevious(tempUpdateNode);
-				}
-				//if node has moved to the end of the list, update the tail
-				if (tempUpdateNode.getNext() == null)
-				{
-					tail = tempUpdateNode;
-				}
-				
+				newNode.setPrevious(tempNode.getPrevious());
+				newNode.setNext(tempNode);
+				tempNode.getPrevious().setNext(newNode);
+				tempNode.setPrevious(newNode);
 			}
+		}
+		else
+		{
+			Node<T> tempNode = getNode(item);
+			tempNode.updateCount(tempNode.getCount() + 1);
 		}
 	} // end of add()
 	
