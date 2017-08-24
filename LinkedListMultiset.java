@@ -81,15 +81,15 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	public void removeAll(T item) {
 		Node<T> tempNode = getNode(item);
 		//if node is at head, move head along one
-		if (head == tempNode)
+		if (tempNode.equals(head))
 		{
 			head = head.getNext();
 			head.setPrevious(null);
 		}
 		//if node is at tail, cut tail short one in list
-		else if (tail == tempNode)
+		else if (tempNode.equals(tail))
 		{
-			tail = tempNode.getPrevious();
+			tail = tail.getPrevious();
 			tail.setNext(null);
 		}
 		else
