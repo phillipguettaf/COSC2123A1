@@ -120,8 +120,8 @@ public class DataGenerator {
 			}
 		}
 		
-		writer.write("P");
-		writer.write("Q");
+		writer.println("P");
+		writer.println("Q");
 		writer.close();
 		writerFile.close();
 		
