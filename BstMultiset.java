@@ -198,7 +198,7 @@ public class BstMultiset<T> extends Multiset<T>
       if(node != null)
       {
          getPrint(node.getLeft(), out);
-         out.println(printNode.get() + " | " + printNode.getCount());
+         System.out.println(printNode.get() + " | " + printNode.getCount());
          getPrint(node.getRight(), out);
       }
    }
@@ -212,10 +212,12 @@ public class BstMultiset<T> extends Multiset<T>
    {
 	   String itemString = (String)item;
 	   BstNode<T> current = root;
-	   String currentString = (String) current.get();
+	   String currentString;
 	   
 	   while (current != null)
 	   {
+		   currentString = (String) current.get();
+		   
 		   if (itemString.compareTo(currentString) > 0)
 		   {
 			   current=current.getRight();
@@ -228,7 +230,7 @@ public class BstMultiset<T> extends Multiset<T>
 		   {
 			   return current;
 		   }
-		   currentString = (String) current.get();
+		   
 	   }
 	   return null;   
    }
