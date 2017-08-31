@@ -174,44 +174,21 @@ public class BstMultiset<T> extends Multiset<T>
    // end of removeAll()
    
    
-   public BstNode<T> getReplacement(BstNode<T> remove)
-   {
-      BstNode<T> replacement = null;
-      BstNode<T> parent = null;
-      BstNode<T> current = remove.right;
-      
-      while(current != null)
-      {
-         parent = replacement;
-         replacement = current;
-         current = current.left;
-      }
-      
-      if(replacement != remove.right)
-      {
-         parent.left = replacement.right;
-         replacement.right = remove.right;
-      }
-      
-      return replacement;
-         
-   }
-
-   public void getPrint(BstNode<T> root)
+public void getPrint(BstNode<T> root, PrintStream out)
    {
       BstNode<T> printNode = root;
       
       if(root != null)
       {
-         getPrint(root.getLeft());
-         System.out.println(printNode.get() + " | " + printNode.getCount());
-         getPrint(root.getRight());
+         getPrint(root.getLeft(), out);
+         out.println(printNode.get() + " | " + printNode.getCount());
+         getPrint(root.getRight(), out);
       }
    }
    
    public void print(PrintStream out) {
       
-      getPrint(root);
+      getPrint(root, out);
    }
    
    public BstNode<T> getNode(T item, BstNode<T> root)
