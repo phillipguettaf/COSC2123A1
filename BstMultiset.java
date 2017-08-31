@@ -26,31 +26,26 @@ public class BstMultiset<T> extends Multiset<T>
       BstNode<T> parent = null;
       String itemString = (String)item;
       
+      if (getNode(item, root) != null)
+      {
+    	  getNode(item, root).updateCount(getNode(item, root).getCount() + 1);
+    	  return;
+      }
+      
       while(true)
       {  
          String currentString = (String)current.get();
          parent = current;
          
-         if(itemString.compareTo(currentString) == 0)
-         {
-            current.updateCount(current.getCount() + 1);
-            return;
-         }
-         
-         if(itemString.compareTo(currentString) < 0)
+         if (itemString.compareTo(currentString) < 0)
          {
             current = current.getLeft();
-            
-            if(itemString.compareTo(currentString) == 0)
-            {
-               current.updateCount(current.getCount() + 1);
-               return;
-            }
             
             if(current == null)
             {
                parent.setLeft(newNode);
                newNode.setParent(parent);
+               count++;
                return;
             }
          }
@@ -59,15 +54,11 @@ public class BstMultiset<T> extends Multiset<T>
          {
             current = current.getRight();
 
-            if(itemString.compareTo(currentString) == 0)
-            {
-               current.updateCount(current.getCount() + 1);
-               return;
-            }
             if(current == null)
             {
                parent.setRight(newNode);
                newNode.setParent(parent);
+               count++;
                return;
             }
          }
@@ -112,50 +103,57 @@ public class BstMultiset<T> extends Multiset<T>
    
    public void removeAll(T item) {
 	   BstNode<T> remove = getNode(item, root);
-	   
+	   removeNode(remove);
+   }
+   
+   public void removeNode(BstNode<T> remove)
+   {
 	   
 	   if (remove == null)
 	   {
 		   return;
 	   }
 	   
+	   BstNode<T> parent = remove.getParent();
+	   
 	   //if node has no children
 	   if (remove.getLeft() == null && remove.getRight() == null)
 	   {
-		   if (remove == remove.getParent().getRight())
+		   //cut off node from branch
+		   if (remove == parent.getRight())
 		   {
-			   remove.getParent().setRight(null);
+			   parent.setRight(null);
 		   }
-		   else if (remove == remove.getParent().getLeft())
+		   else if (remove == parent.getLeft())
 		   {
-			   remove.getParent().setLeft(null);
+			   parent.setLeft(null);
 		   }
 	   }
 	   //if node has one child
 	   else if (remove.getLeft() == null)
 	   {
-		   if (remove == remove.getParent().getRight())
+		   if (remove == parent.getRight())
 		   {
-			   remove.getParent().setRight(remove.getRight());
-			   remove.getRight().setParent(remove.getParent());
+			   parent.setRight(remove.getRight());
+			   remove.getRight().setParent(parent);
 		   }
-		   else if (remove == remove.getParent().getLeft())
+		   else if (remove == parent.getLeft())
 		   {
-			   remove.getParent().setLeft(remove.getRight());
-			   remove.getRight().setParent(remove.getParent());
+			   parent.setLeft(remove.getRight());
+			   remove.getRight().setParent(parent);
 		   }
 	   }
 	   else if (remove.getRight() == null)
 	   {
-		   if (remove == remove.getParent().getRight())
+		   if (remove == parent.getRight())
 		   {
-			   remove.getParent().setRight(remove.getLeft());
-			   remove.getLeft().setParent(remove.getParent());
+			   parent.setRight(remove.getLeft());
+			   remove.getLeft().setParent(parent);
 		   }
-		   else if (remove == remove.getParent().getLeft())
+		   else if (remove == parent.getLeft())
 		   {
-			   remove.getParent().setLeft(remove.getLeft());
-			   remove.getLeft().setParent(remove.getParent());
+			   parent.setLeft(remove.getLeft());
+			   remove.getLeft().setParent(parent);
 		   }
 	   }
 	   //if node has two children
@@ -165,14 +163,7 @@ public class BstMultiset<T> extends Multiset<T>
 		   remove.item = min.get();
 		   remove.updateCount(min.getCount());
 		   
-		   if (min == min.getParent().getLeft())
-		   {
-			   min.getParent().setLeft(null);
-		   }
-		   else
-		   {
-			   min.getParent().setRight(null);
-		   }
+		   removeNode(min);
 	   }
    }
    // end of removeAll()
