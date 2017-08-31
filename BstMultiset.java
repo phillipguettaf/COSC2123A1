@@ -191,29 +191,29 @@ public void getPrint(BstNode<T> root, PrintStream out)
       getPrint(root, out);
    }
    
-   public BstNode<T> getNode(T item, BstNode<T> root)
+    public BstNode<T> getNode(T item, BstNode<T> root)
    {
 	   String itemString = (String)item;
 	   BstNode<T> current = root;
 	   String currentString = (String) current.get();
 	   
-	   while (itemString.compareTo(currentString) != 0)
+	   while (current != null)
 	   {
-		   if (itemString.compareTo(currentString) > 0 && current.getRight() != null)
+		   if (itemString.compareTo(currentString) > 0)
 		   {
 			   current=current.getRight();
 		   }
-		   else if (itemString.compareTo(currentString) < 0 && current.getLeft() != null)
+		   else if (itemString.compareTo(currentString) < 0)
 		   {
 			   current=current.getLeft();
 		   }
-		   else
+		   else if (itemString.compareTo(currentString) == 0)
 		   {
-			   return null;
+			   return current;
 		   }
 		   currentString = (String) current.get();
 	   }
-	   return current;   
+	   return null;   
    }
    
    public BstNode<T> getMinNode(BstNode<T> node)
