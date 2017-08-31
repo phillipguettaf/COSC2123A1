@@ -137,10 +137,12 @@ public class BstMultiset<T> extends Multiset<T>
 		   if (remove == remove.getParent().getRight())
 		   {
 			   remove.getParent().setRight(remove.getRight());
+			   remove.getRight().setParent(remove.getParent());
 		   }
 		   else if (remove == remove.getParent().getLeft())
 		   {
 			   remove.getParent().setLeft(remove.getRight());
+			   remove.getRight().setParent(remove.getParent());
 		   }
 	   }
 	   else if (remove.getRight() == null)
@@ -148,10 +150,12 @@ public class BstMultiset<T> extends Multiset<T>
 		   if (remove == remove.getParent().getRight())
 		   {
 			   remove.getParent().setRight(remove.getLeft());
+			   remove.getLeft().setParent(remove.getParent());
 		   }
 		   else if (remove == remove.getParent().getLeft())
 		   {
 			   remove.getParent().setLeft(remove.getLeft());
+			   remove.getLeft().setParent(remove.getParent());
 		   }
 	   }
 	   //if node has two children
@@ -172,9 +176,8 @@ public class BstMultiset<T> extends Multiset<T>
 	   }
    }
    // end of removeAll()
-   
-   
-public void getPrint(BstNode<T> root, PrintStream out)
+
+   public void getPrint(BstNode<T> root, PrintStream out)
    {
       BstNode<T> printNode = root;
       
@@ -191,7 +194,7 @@ public void getPrint(BstNode<T> root, PrintStream out)
       getPrint(root, out);
    }
    
-    public BstNode<T> getNode(T item, BstNode<T> root)
+   public BstNode<T> getNode(T item, BstNode<T> root)
    {
 	   String itemString = (String)item;
 	   BstNode<T> current = root;
