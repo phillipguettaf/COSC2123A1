@@ -7,7 +7,7 @@ public class BstMultiset<T> extends Multiset<T>
    public BstNode<T> root;
    protected int count;
    
-   public BstMultiset2() {
+   public BstMultiset() {
       
    } // end of BstMultiset()
 
@@ -78,7 +78,7 @@ public class BstMultiset<T> extends Multiset<T>
 
    public int search(T item) {
       
-      BstNode<T> current = getNode(item);
+      BstNode<T> current = getNode(item, root);
       
       if (current == null)
       {
@@ -93,7 +93,7 @@ public class BstMultiset<T> extends Multiset<T>
 
    public void removeOne(T item) {
       
-      BstNode<T> remove = getNode(item);
+      BstNode<T> remove = getNode(item, root);
       
       if (remove == null)
       {
@@ -111,17 +111,12 @@ public class BstMultiset<T> extends Multiset<T>
    
    
    public void removeAll(T item) {
-	   BstNode<T> remove = getNode(item);
+	   BstNode<T> remove = getNode(item, root);
 	   
 	   
 	   if (remove == null)
 	   {
 		   return;
-	   }
-	   
-	   if (remove != root)
-	   {
-		   BstNode<T> parent = remove.getParent();
 	   }
 	   
 	   //if node has no children
@@ -162,7 +157,18 @@ public class BstMultiset<T> extends Multiset<T>
 	   //if node has two children
 	   else
 	   {
+		   BstNode<T> min = getMinNode(remove.getRight());
+		   remove.item = min.get();
+		   remove.updateCount(min.getCount());
 		   
+		   if (min == min.getParent().getLeft())
+		   {
+			   min.getParent().setLeft(null);
+		   }
+		   else
+		   {
+			   min.getParent().setRight(null);
+		   }
 	   }
    }
    // end of removeAll()
@@ -208,7 +214,7 @@ public class BstMultiset<T> extends Multiset<T>
       getPrint(root);
    }
    
-   public BstNode<T> getNode(T item)
+   public BstNode<T> getNode(T item, BstNode<T> root)
    {
 	   String itemString = (String)item;
 	   BstNode<T> current = root;
@@ -230,8 +236,19 @@ public class BstMultiset<T> extends Multiset<T>
 		   }
 		   currentString = (String) current.get();
 	   }
-	   return current;
-	   
+	   return current;   
+   }
+   
+   public BstNode<T> getMinNode(BstNode<T> node)
+   {
+	   if (node.getLeft() == null)
+	   {
+		   return node;
+	   }
+	   else
+	   {
+		   return getMinNode(node.getLeft());
+	   }
    }
    
    
